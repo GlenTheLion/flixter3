@@ -15,12 +15,25 @@ class Instructor::CoursesController < ApplicationController
 
     @course = Course.find(params[:id])
 
+    if @course.valid?
+
+      redirect_to instructor_course_path(@course)
+
+    else
+
+      render :new, status: :unprocessable_entity
+
+    end
+
   end
   
 
   private
 
   def course_params
+
     params.require(:course).permit(:title, :description, :cost)
+
   end
+  
 end
